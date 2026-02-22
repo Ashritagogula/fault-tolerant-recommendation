@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  recommendation-service:
+    build: ./recommendation-service
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      user-profile-service:
+        condition: service_healthy
+      content-service:
+        condition: service_healthy
+      trending-service:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  user-profile-service:
+    build: ./user-profile-service
+    ports:
+      - "8081:8081"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8081/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  content-service:
+    build: ./content-service
+    ports:
+      - "8082:8082"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8082/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  trending-service:
+    build: ./trending-service
+    ports:
+      - "8083:8083"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8083/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
