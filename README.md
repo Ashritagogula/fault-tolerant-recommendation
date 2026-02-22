@@ -11,6 +11,10 @@ The system prevents cascading failures when dependent services become slow or un
 
 It consists of four containerized services orchestrated using **Docker Compose**.
 
+# Video : 
+
+https://youtu.be/2jTzDw4598c
+
 ---
 
 ## 🏗 Architecture
